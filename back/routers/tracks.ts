@@ -1,9 +1,5 @@
 import express from 'express';
 import Track from '../models/Track';
-import album from '../models/Album';
-import artist from '../models/Artist';
-import Album from '../models/Album';
-
 const tracksRouter = express.Router();
 
 tracksRouter.get('/', async (req, res, next) => {
@@ -31,11 +27,7 @@ tracksRouter.get('/:id', async (req, res, next) => {
     res.status(404).send({ error: 'Id required' });
   }
   try {
-    let test = [];
     let tracks = await Track.find().populate('album');
-
-    const albums = await Album.find({ artist: id }).populate('artist');
-    const albumId = albums.map((item) => item._id);
 
     res.status(200).send(tracks);
   } catch (error) {
