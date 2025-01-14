@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { selectAllArtists } from './artistsSlice.ts';
 import { fetchArtistsThunk } from './artistsThunk.ts';
 import { Grid2, Typography } from '@mui/material';
@@ -9,9 +9,9 @@ const Artists = () => {
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectAllArtists);
 
-  const fetchAllArtists = async () => {
+  const fetchAllArtists = useCallback(async () => {
     await dispatch(fetchArtistsThunk());
-  }
+  }, []);
 
   useEffect(() => {
     void fetchAllArtists();
@@ -23,9 +23,9 @@ const Artists = () => {
         Albums
       </Typography>
       <Grid2 container spacing={2}>
-        {artists.map((artist)=>(
+        {artists.map((artist) => (
           <Grid2 key={artist._id}>
-            <Artist artist={artist}/>
+            <Artist artist={artist} />
           </Grid2>
         ))}
       </Grid2>

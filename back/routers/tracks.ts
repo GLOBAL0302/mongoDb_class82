@@ -1,15 +1,20 @@
 import express from 'express';
 import Track from '../models/Track';
+
 const tracksRouter = express.Router();
 
 tracksRouter.get('/', async (req, res, next) => {
   const albumId = req.query.albumId;
-  console.log(albumId);
-
   try {
     let tracks;
     if (albumId) {
-      tracks = await Track.find({ album: albumId });
+      tracks = await Track.find({ album: albumId }).populate({
+        path: 'album',
+        populate: {
+          path: 'artist',
+          model: 'Artist',
+        },
+      });
     } else {
       tracks = await Track.find();
     }
@@ -28,7 +33,6 @@ tracksRouter.get('/:id', async (req, res, next) => {
   }
   try {
     let tracks = await Track.find().populate('album');
-
     res.status(200).send(tracks);
   } catch (error) {
     next(error);

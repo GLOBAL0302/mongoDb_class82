@@ -33,25 +33,26 @@ const run = async () => {
 
   const [linkinPark_1al, linkinPark_2al, skillet_1al, skillet_2al] = await Album.create(
     {
-      title: 'Rising',
+      title: 'Meteora',
       artist: linkinPark,
       create_at: 2011,
-      image: 'fixtures/linkin_1.jpg',
+      image: 'fixtures/linkin_1.png',
     },
     {
-      title: 'Red Day',
+      title: 'Hybrid Theory',
       artist: linkinPark,
-      create_at: 2011,
+      create_at: 2022,
       image: 'fixtures/linkin_2.jpeg',
     },
+
     {
-      title: 'Monster',
+      title: 'Comatose',
       artist: skillet,
       create_at: 2020,
       image: 'fixtures/skillet_1.jpg',
     },
     {
-      title: 'Beast',
+      title: 'Collide',
       artist: skillet,
       create_at: 2021,
       image: 'fixtures/skillet_2.jpg',
@@ -60,28 +61,130 @@ const run = async () => {
 
   await Track.create(
     {
-      title: 'numb',
+      title: 'Foreworld',
       track_number: 1,
       album: linkinPark_1al,
-      duration: '2:23',
+      duration: '2:00',
     },
     {
-      title: 'numb',
+      title: 'Hit the floor',
       track_number: 2,
       album: linkinPark_1al,
       duration: '2:23',
     },
     {
-      title: 'be Hero',
+      title: 'Dont Stay',
+      track_number: 3,
+      album: linkinPark_1al,
+      duration: '2:00',
+    },
+    {
+      title: 'Figure 009',
+      track_number: 4,
+      album: linkinPark_1al,
+      duration: '2:35',
+    },
+    {
+      title: 'Faint',
+      track_number: 5,
+      album: linkinPark_1al,
+      duration: '2:35',
+    },
+
+    {
+      title: 'Papercut',
+      track_number: 1,
+      album: linkinPark_2al,
+      duration: '2:34',
+    },
+    {
+      title: 'With you',
+      track_number: 2,
+      album: linkinPark_2al,
+      duration: '2:45',
+    },
+    {
+      title: 'Crawling',
+      track_number: 3,
+      album: linkinPark_2al,
+      duration: '2:36',
+    },
+    {
+      title: 'By Myself',
+      track_number: 4,
+      album: linkinPark_2al,
+      duration: '2:45',
+    },
+    {
+      title: 'Crawling',
+      track_number: 5,
+      album: linkinPark_2al,
+      duration: '2:23',
+    },
+
+    {
+      title: 'Yours to Hold',
       track_number: 1,
       album: skillet_1al,
+      duration: '3:24',
+    },
+
+    {
+      title: 'Comatose',
+      track_number: 2,
+      album: skillet_1al,
+      duration: '3:24',
+    },
+    {
+      title: 'Those Nights',
+      track_number: 3,
+      album: skillet_1al,
+      duration: '3:24',
+    },
+
+    {
+      title: 'The last Night',
+      track_number: 4,
+      album: skillet_1al,
+      duration: '3:54',
+    },
+
+    {
+      title: 'The older I get',
+      track_number: 5,
+      album: skillet_1al,
+      duration: '3:34',
+    },
+
+    {
+      title: 'The last Night',
+      track_number: 1,
+      album: skillet_2al,
       duration: '3:44',
     },
     {
-      title: 'Monster inside me',
+      title: 'My Obsession',
       track_number: 2,
-      album: skillet_1al,
-      duration: '3:44',
+      album: skillet_2al,
+      duration: '3:33',
+    },
+    {
+      title: 'Fingermails',
+      track_number: 3,
+      album: skillet_2al,
+      duration: '3:25',
+    },
+    {
+      title: 'Finger mails',
+      track_number: 4,
+      album: skillet_2al,
+      duration: '3:28',
+    },
+    {
+      title: 'Under My Skin',
+      track_number: 5,
+      album: skillet_2al,
+      duration: '3:21',
     },
   );
 

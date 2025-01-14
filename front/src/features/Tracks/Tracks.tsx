@@ -1,0 +1,41 @@
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import { useCallback, useEffect } from 'react';
+import { fetchTracks } from './tracksThunks.ts';
+import { selectTrackAlbum, selectTrackAlbumAuthor, selectTracks } from './tracksSlice.ts';
+import { Grid2, Typography } from '@mui/material';
+import Track from './Track.tsx';
+
+const Tracks = () => {
+  const { id } = useParams();
+  const author = useAppSelector(selectTrackAlbumAuthor);
+  const trackAlbum = useAppSelector(selectTrackAlbum);
+  const selectAllTracks = useAppSelector(selectTracks);
+  const dispatch = useAppDispatch();
+
+  const fetchAllTracks = useCallback(async () => {
+    if (id) await dispatch(fetchTracks(id));
+  }, []);
+
+  useEffect(() => {
+    void fetchAllTracks();
+  }, [fetchAllTracks]);
+
+  return (
+    <Grid2>
+      <Typography textAlign="center" variant="h2" component="h2">
+        {author}
+      </Typography>
+      <Typography textAlign="center" variant="h4" component="h4">
+        {trackAlbum}
+      </Typography>
+      <Grid2 container direction="column" spacing={2}>
+        {selectAllTracks.map((track) => (
+          <Track key={track._id} track={track} />
+        ))}
+      </Grid2>
+    </Grid2>
+  );
+};
+
+export default Tracks;

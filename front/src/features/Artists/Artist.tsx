@@ -4,15 +4,14 @@ import { Button, CardMedia, Grid2, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 interface Props {
-  artist:IArtists
+  artist: IArtists;
 }
 
-const Artist:React.FC<Props> = ({artist}) => {
+const Artist: React.FC<Props> = ({ artist }) => {
+  let artistsPic: string = '';
 
-  let artistsPic:string="";
-
-  if(artist.image){
-    artistsPic = apiUrl + "/"+ artist.image;
+  if (artist.image) {
+    artistsPic = apiUrl + '/' + artist.image;
   }
 
   return (
@@ -20,15 +19,15 @@ const Artist:React.FC<Props> = ({artist}) => {
       container
       direction="column"
       sx={{
-        padding:"3px",
-        border:"5px solid brown"
+        padding: '3px',
+        border: '5px solid brown',
       }}
     >
       <Grid2>
         <CardMedia
           component="img"
           image={artistsPic}
-          style={{width:"200px", height:"200px"}}
+          style={{ width: '200px', height: '200px' }}
           title={artist.title}
         />
       </Grid2>
