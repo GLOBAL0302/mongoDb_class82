@@ -13,7 +13,8 @@ const AlbumSchema = new Schema({
     required: [true, 'artistId is required'],
   },
   create_at: {
-    type: String,
+    type: Number,
+    required: true,
   },
   image: String,
 });

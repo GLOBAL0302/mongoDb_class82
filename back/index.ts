@@ -7,6 +7,7 @@ import albumsRouter from './routers/albums';
 import tracksRouter from './routers/tracks';
 import userRouter from './routers/users';
 import track_historyRouter from './routers/track_history';
+import config from './config';
 
 const app = express();
 const port = 8000;
@@ -22,7 +23,7 @@ app.use('/users', userRouter);
 app.use('/track_history', track_historyRouter);
 
 const run = async () => {
-  await mongoose.connect('mongodb://localhost:27017/spotify');
+  await mongoose.connect(config.db);
 
   app.listen(port, () => {
     console.log(`Server running on port: http://localhost:${port}`);

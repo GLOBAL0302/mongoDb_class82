@@ -7,6 +7,10 @@ const TrackSchema = new Schema({
     type: String,
     required: [true, 'Title is required'],
   },
+  track_number: {
+    type: Number,
+    required: [true, 'Track number is required'],
+  },
   album: {
     type: Schema.Types.ObjectId,
     ref: 'Album',
