@@ -62,76 +62,76 @@ const run = async () => {
   await Track.create(
     {
       title: 'Foreworld',
-      track_number: 1,
+      track_number: 2,
       album: linkinPark_1al,
       duration: '2:00',
     },
     {
       title: 'Hit the floor',
-      track_number: 2,
+      track_number: 1,
       album: linkinPark_1al,
       duration: '2:23',
     },
     {
       title: 'Dont Stay',
-      track_number: 3,
+      track_number: 5,
       album: linkinPark_1al,
       duration: '2:00',
     },
     {
       title: 'Figure 009',
-      track_number: 4,
+      track_number: 3,
       album: linkinPark_1al,
       duration: '2:35',
     },
     {
       title: 'Faint',
-      track_number: 5,
+      track_number: 4,
       album: linkinPark_1al,
       duration: '2:35',
     },
 
     {
       title: 'Papercut',
-      track_number: 1,
+      track_number: 2,
       album: linkinPark_2al,
       duration: '2:34',
     },
     {
       title: 'With you',
-      track_number: 2,
+      track_number: 3,
       album: linkinPark_2al,
       duration: '2:45',
     },
     {
       title: 'Crawling',
-      track_number: 3,
+      track_number: 1,
       album: linkinPark_2al,
       duration: '2:36',
     },
     {
       title: 'By Myself',
-      track_number: 4,
+      track_number: 5,
       album: linkinPark_2al,
       duration: '2:45',
     },
     {
       title: 'Crawling',
-      track_number: 5,
+      track_number: 4,
       album: linkinPark_2al,
       duration: '2:23',
     },
 
     {
       title: 'Yours to Hold',
-      track_number: 1,
+      track_number: 2,
       album: skillet_1al,
       duration: '3:24',
     },
 
     {
       title: 'Comatose',
-      track_number: 2,
+      track_number: 1,
       album: skillet_1al,
       duration: '3:24',
     },
@@ -164,7 +164,7 @@ const run = async () => {
     },
     {
       title: 'My Obsession',
-      track_number: 2,
+      track_number: 4,
       album: skillet_2al,
       duration: '3:33',
     },
@@ -176,7 +176,7 @@ const run = async () => {
     },
     {
       title: 'Finger mails',
-      track_number: 4,
+      track_number: 2,
       album: skillet_2al,
       duration: '3:28',
     },

@@ -14,7 +14,7 @@ tracksRouter.get('/', async (req, res, next) => {
           path: 'artist',
           model: 'Artist',
         },
-      });
+      }).sort("track_number");
     } else {
       tracks = await Track.find();
     }

@@ -10,14 +10,13 @@ albumsRouter.get('/', async (req, res, next) => {
   try {
     let albums;
     if (artistId) {
-      albums = await Album.find({ artist: artistId }).populate('artist');
+      albums = await Album.find({ artist: artistId }).populate('artist').sort({create_at:-1});
     } else {
       albums = await Album.find().populate('artists');
     }
 
-    const sortedAlbum = albums.sort((a, b) => b.create_at - a.create_at);
 
-    res.status(200).send(sortedAlbum);
+    res.status(200).send(albums);
   } catch (error) {
     next(error);
   }
