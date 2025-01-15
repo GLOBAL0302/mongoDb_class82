@@ -1,13 +1,14 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { useCallback, useEffect } from 'react';
-import { selectAllArtists } from './artistsSlice.ts';
+import { selectAllArtists, selectFetchingArtists } from './artistsSlice.ts';
 import { fetchArtistsThunk } from './artistsThunk.ts';
-import { Grid2, Typography } from '@mui/material';
+import { CircularProgress, Grid2, Typography } from '@mui/material';
 import Artist from './Artist';
 
 const Artists = () => {
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectAllArtists);
+  const artistsLoading = useAppSelector(selectFetchingArtists);
 
   const fetchAllArtists = useCallback(async () => {
     await dispatch(fetchArtistsThunk());
@@ -15,7 +16,7 @@ const Artists = () => {
 
   useEffect(() => {
     void fetchAllArtists();
-  }, []);
+  }, [fetchAllArtists]);
 
   return (
     <>
@@ -23,11 +24,17 @@ const Artists = () => {
         Albums
       </Typography>
       <Grid2 container spacing={2}>
-        {artists.map((artist) => (
-          <Grid2 key={artist._id}>
-            <Artist artist={artist} />
-          </Grid2>
-        ))}
+        {artistsLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            {artists.map((artist) => (
+              <Grid2 key={artist._id}>
+                <Artist artist={artist} />
+              </Grid2>
+            ))}
+          </>
+        )}
       </Grid2>
     </>
   );

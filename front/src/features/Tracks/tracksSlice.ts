@@ -23,10 +23,10 @@ const tracksSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTracks.pending, (state) => {
-        state.fetchingTracks = false;
+        state.fetchingTracks = true;
       })
       .addCase(fetchTracks.fulfilled, (state, { payload }) => {
-        state.fetchingTracks = true;
+        state.fetchingTracks = false;
         state.tracks = payload;
         state.trackAlbum = payload[0].album.title;
         state.author = payload[0].album.artist.title;

@@ -21,10 +21,10 @@ const albumsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAlbumsThunk.pending, (state) => {
-        state.fetchingAlbums = false;
+        state.fetchingAlbums = true;
       })
       .addCase(fetchAlbumsThunk.fulfilled, (state, { payload }) => {
-        state.fetchingAlbums = true;
+        state.fetchingAlbums = false;
         state.Albums = payload;
         state.AlbumAuthor = payload[0].artist.title;
       })
