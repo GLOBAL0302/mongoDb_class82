@@ -46,7 +46,9 @@ track_historyRouter.get('/', auth, async (req, res, next) => {
     });
     if (!tracksHistory) res.status(200).send({ message: 'No track with this user' });
 
-    res.status(200).send(tracksHistory);
+
+    const sortedTracks = tracksHistory.sort((a, b)=>-a.dateTime.localeCompare(b.dateTime))
+    res.status(200).send(sortedTracks);
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).send({ error });

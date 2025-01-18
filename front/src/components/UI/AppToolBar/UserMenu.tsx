@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks.ts';
 import { logOutThunk } from '../../../features/Users/usersThunk.ts';
 import { unsetUser } from '../../../features/Users/usersSlice.ts';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, Menu, MenuItem, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 export interface Props {
@@ -32,7 +32,10 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   return (
     <>
       <Button onClick={handleClick} color="inherit">
-        Welcome {user.username}
+        <Typography mr={2} variant="body2" component='p' color="inherit">
+          Welcome
+        </Typography>
+        <strong style={{textDecoration:"underline"}}>{user.username}</strong>
       </Button>
       <Menu anchorEl={anchorEl} onClose={handleClose} keepMounted open={Boolean(anchorEl)}>
         <MenuItem onClick={() => navigate('/trackHistory')}>My Play History</MenuItem>
