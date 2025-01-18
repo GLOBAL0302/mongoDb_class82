@@ -112,7 +112,6 @@ const RegisterPage = () => {
           </Box>
         </Box>
       </Container>
-
     </>
   );
 };

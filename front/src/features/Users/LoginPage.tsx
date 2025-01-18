@@ -1,10 +1,10 @@
-import { Avatar, Box, Button, Container, Grid2, TextField, Typography } from '@mui/material';
+import { Alert, Avatar, Box, Button, Container, Grid2, TextField, Typography } from '@mui/material';
 import {useState } from 'react';
-import LockPersonIcon from '@mui/icons-material/LockPerson';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { ILoginMutation } from '../../types';
-import { signUpUserThunk } from './usersThunk.ts';
+import { signInThunk} from './usersThunk.ts';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectRegisterError } from './usersSlice.ts';
+import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 
@@ -15,7 +15,7 @@ const initialState ={
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
-  const registerError = useAppSelector(selectRegisterError);
+  const loginError = useAppSelector(selectLoginError)
   const navigate = useNavigate();
   const [userForm, setUserForm] = useState<ILoginMutation>(initialState);
 
@@ -31,23 +31,13 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
     try {
-      await dispatch(signUpUserThunk(userForm)).unwrap();
+      await dispatch(signInThunk(userForm)).unwrap();
       navigate('/')
     }catch(e){
       console.log(e);
     }
   }
-
-  const getFieldError = (fieldName:string)=>{
-    try{
-      return registerError?.errors[fieldName].message;
-    }catch{
-      return undefined;
-    }
-  }
-
 
   return (
     <>
@@ -61,11 +51,16 @@ const RegisterPage = () => {
           }}
         >
           <Avatar sx={{ p:1, bgcolor: 'secondary.main', size: 'large' }}>
-            <LockPersonIcon fontSize="large"/>
+            <LockOpenIcon fontSize="large"/>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
+          {loginError &&(
+            <Alert severity="error" sx={{mt:3, width:'100%'}}>
+              {loginError.error}
+            </Alert>
+          )}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid2 container direction={'column'} size={12} spacing={2}>
               <Grid2 size={12}>
@@ -76,8 +71,7 @@ const RegisterPage = () => {
                   fullWidth
                   id="username"
                   label="Username"
-                  error={Boolean(getFieldError('username'))}
-                  helperText={getFieldError('username')}
+
                 />
               </Grid2>
               <Grid2 size={12}>
@@ -89,8 +83,6 @@ const RegisterPage = () => {
                   label="Password"
                   type="password"
                   id="password"
-                  error={Boolean(getFieldError('password'))}
-                  helperText={getFieldError('password')}
                 />
               </Grid2>
             </Grid2>
@@ -100,12 +92,12 @@ const RegisterPage = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign in
             </Button>
             <Grid2 container justifyContent="flex-end">
               <Grid2>
-                <NavLink to={'/login'}>
-                  Already have an account? Sign in
+                <NavLink to={'/register'}>
+                  Do not have account? Sign up
                 </NavLink>
               </Grid2>
             </Grid2>

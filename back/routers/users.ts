@@ -26,30 +26,32 @@ usersRouter.post('/register', async (req, res, next) => {
   }
 });
 
-usersRouter.post("/sessions",auth, async(req, res, next)=>{
+
+
+usersRouter.post("/sessions", async(req, res, next)=>{
   try{
     const user = await User.findOne({username:req.body.username});
     if(!user){
-      res.status(404).send({error: 'No user with that username'});
+      res.status(400).send({error: 'No user with that username'});
       return
     }
 
     const isMatch =  await user.checkPassword(req.body.password);
-
     if(!isMatch){
-      res.status(401).send('Password is incorrect');
+      res.status(400).send({error: 'Password is incorrect'});
       return
     }
 
     user.generateToken();
     await user.save();
-
     res.status(200).send({message:"Username and password are correct ", user});
   }catch(error){
     if(error instanceof Error.ValidationError){
       res.status(400).send({error: error.message});
       return
     }
+
+    next(error)
   }
 })
 
@@ -64,7 +66,7 @@ usersRouter.delete('/sessions', auth, async (req, res, next)=>{
     if(user){
       user.generateToken();
       await user.save();
-      res.send({message:"Successfully deleted user from the database"});
+      res.send({message:"Successfully logged out form your Account"});
     }
 
   }catch(error){

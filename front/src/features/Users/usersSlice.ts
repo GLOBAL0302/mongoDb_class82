@@ -1,6 +1,6 @@
 import { IGlobalError, IUser, IValidationError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { signUpUserThunk } from './usersThunk.ts';
+import { signInThunk, signUpUserThunk } from './usersThunk.ts';
 
 interface UsersState{
   user:IUser | null,
@@ -18,11 +18,13 @@ const initialState: UsersState = {
   loginError:null
 }
 
-
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers:{
+    unsetUser:(state)=>{
+      state.user=null;
+    }
 
   },
   extraReducers:(builder=>{
@@ -39,6 +41,18 @@ const usersSlice = createSlice({
         state.registerLoading = false
         state.registerError = error || null
       })
+    builder
+      .addCase(signInThunk.pending, (state)=>{
+        state.loginLoading =  true
+      })
+      .addCase(signInThunk.fulfilled, (state, {payload:user}) => {
+        state.loginLoading = false
+        state.user =  user
+      })
+      .addCase(signInThunk.rejected, (state, {payload:error}) => {
+        state.loginError =error ||null
+        state.loginLoading = false
+      })
   }),
   selectors:{
     selectUser:(state=> state.user),
@@ -50,7 +64,7 @@ const usersSlice = createSlice({
 });
 
 export const usersReducer = usersSlice.reducer;
-export const {} = usersSlice.actions;
+export const {unsetUser} = usersSlice.actions;
 export const { selectUser,
 selectLoginLoading,
 selectRegisterLoading,
