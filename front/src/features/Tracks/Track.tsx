@@ -9,12 +9,11 @@ interface Props {
 }
 
 const Track: React.FC<Props> = ({ track }) => {
+  const dispatch = useAppDispatch();
 
-  const dispatch = useAppDispatch()
-
-  const addOneTrack = ()=>{
-    dispatch(addTrack(track))
-  }
+  const addOneTrack = () => {
+    dispatch(addTrack(track));
+  };
 
   return (
     <Grid2
@@ -42,8 +41,8 @@ const Track: React.FC<Props> = ({ track }) => {
         </Typography>
       </Grid2>
       <Grid2>
-        <Button onClick={addOneTrack} type="button"  variant="contained" color="inherit">
-          <PlayCircleIcon fontSize="large"/>
+        <Button onClick={addOneTrack} type="button" variant="contained" color="inherit">
+          <PlayCircleIcon fontSize="large" />
         </Button>
       </Grid2>
     </Grid2>

@@ -8,13 +8,15 @@ tracksRouter.get('/', async (req, res, next) => {
   try {
     let tracks;
     if (albumId) {
-      tracks = await Track.find({ album: albumId }).populate({
-        path: 'album',
-        populate: {
-          path: 'artist',
-          model: 'Artist',
-        },
-      }).sort("track_number");
+      tracks = await Track.find({ album: albumId })
+        .populate({
+          path: 'album',
+          populate: {
+            path: 'artist',
+            model: 'Artist',
+          },
+        })
+        .sort('track_number');
     } else {
       tracks = await Track.find();
     }

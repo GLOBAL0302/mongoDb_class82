@@ -15,13 +15,42 @@ track_historyRouter.post('/', auth, async (req, res, next) => {
       track,
       datetime: new Date().toISOString(),
     });
-
-
     await track_history.save();
     res.status(200).send(track_history);
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).send({ error });
+    }
+    next(error);
+  }
+});
+
+track_historyRouter.get('/', auth, async (req, res, next) => {
+  try {
+    const expressReq = req as RequestWithUser;
+    const user = expressReq.user;
+
+    if (!user) {
+      res.status(301).redirect('/');
+    }
+    const tracksHistory = await TrackHistory.find({ user: user._id }).populate({
+      path: 'track',
+      populate: {
+        path: 'album',
+        model: 'Album',
+        populate: {
+          path: 'artist',
+          model: 'Artist',
+        },
+      },
+    });
+    if (!tracksHistory) res.status(200).send({ message: 'No track with this user' });
+
+    res.status(200).send(tracksHistory);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).send({ error });
+      return;
     }
     next(error);
   }

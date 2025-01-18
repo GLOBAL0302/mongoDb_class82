@@ -7,15 +7,17 @@ import Tracks from './features/Tracks/Tracks.tsx';
 import AppToolBar from './components/UI/AppToolBar/AppToolBar.tsx';
 import RegisterPage from './features/Users/RegisterPage.tsx';
 import LoginPage from './features/Users/LoginPage.tsx';
+import TrackHistory from './features/TrackHistory/TrackHistory.tsx';
 
 const App = () => (
   <>
-    <AppToolBar/>
+    <AppToolBar />
     <Container>
       <Routes>
-        <Route path="/" element={<Artists />}/>
-        <Route path="/register" element={<RegisterPage/>}/>
-        <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/" element={<Artists />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/trackHistory" element={<TrackHistory />} />
         <Route path="/Albums/:id" element={<Albums />} />
         <Route path="/Tracks/:id" element={<Tracks />} />
       </Routes>

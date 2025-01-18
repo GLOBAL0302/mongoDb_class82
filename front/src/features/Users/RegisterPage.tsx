@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Container, Grid2, TextField, Typography } from '@mui/material';
-import {useState } from 'react';
+import { useState } from 'react';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import { ILoginMutation } from '../../types';
 import { signUpUserThunk } from './usersThunk.ts';
@@ -7,11 +7,10 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectRegisterError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-
-const initialState ={
-  username:"",
-  password:""
-}
+const initialState = {
+  username: '',
+  password: '',
+};
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
@@ -19,35 +18,32 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const [userForm, setUserForm] = useState<ILoginMutation>(initialState);
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setUserForm((prevState)=>({
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserForm((prevState) => ({
       ...prevState,
-      [name]:value
-    }))
-  }
-
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-
     try {
       await dispatch(signUpUserThunk(userForm)).unwrap();
-      navigate('/')
-    }catch(e){
+      navigate('/');
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  const getFieldError = (fieldName:string)=>{
-    try{
+  const getFieldError = (fieldName: string) => {
+    try {
       return registerError?.errors[fieldName].message;
-    }catch{
+    } catch {
       return undefined;
     }
-  }
-
+  };
 
   return (
     <>
@@ -60,8 +56,8 @@ const RegisterPage = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ p:1, bgcolor: 'secondary.main', size: 'large' }}>
-            <LockPersonIcon fontSize="large"/>
+          <Avatar sx={{ p: 1, bgcolor: 'secondary.main', size: 'large' }}>
+            <LockPersonIcon fontSize="large" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -94,19 +90,12 @@ const RegisterPage = () => {
                 />
               </Grid2>
             </Grid2>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
             <Grid2 container justifyContent="flex-end">
               <Grid2>
-                <NavLink to={'/login'}>
-                  Already have an account? Sign in
-                </NavLink>
+                <NavLink to={'/login'}>Already have an account? Sign in</NavLink>
               </Grid2>
             </Grid2>
           </Box>

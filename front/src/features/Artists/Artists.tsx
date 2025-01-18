@@ -21,26 +21,27 @@ const Artists = () => {
   }, [fetchAllArtists]);
 
   return (
-    <>{
-      user && <>
-        <Typography textAlign="center" variant="h2" component="h2">
-          Albums
-        </Typography>
-        <Grid2 container spacing={2}>
-          {artistsLoading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              {artists.map((artist) => (
-                <Grid2 key={artist._id}>
-                  <Artist artist={artist} />
-                </Grid2>
-              ))}
-            </>
-          )}
-        </Grid2>
-    </>}
-
+    <>
+      {user && (
+        <>
+          <Typography textAlign="center" variant="h2" component="h2">
+            Albums
+          </Typography>
+          <Grid2 container spacing={2}>
+            {artistsLoading ? (
+              <CircularProgress />
+            ) : (
+              <>
+                {artists.map((artist) => (
+                  <Grid2 key={artist._id}>
+                    <Artist artist={artist} />
+                  </Grid2>
+                ))}
+              </>
+            )}
+          </Grid2>
+        </>
+      )}
     </>
   );
 };

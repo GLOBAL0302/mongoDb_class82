@@ -1,7 +1,7 @@
-export interface IUser{
-  username:string,
-  password:string,
-  token:string
+export interface IUser {
+  username: string;
+  password: string;
+  token: string;
 }
 
 export interface IArtists {
@@ -26,30 +26,35 @@ export interface ITracks {
   duration: string;
 }
 
-
-export interface IRegisterResponse{
-  user: IUser
-  message:string
+export interface ITrackHistory {
+  _id: string;
+  dateTime: string;
+  track: ITracks;
+  user: string;
 }
 
-export interface ILoginMutation{
-  username:string,
-  password:string,
+export interface IRegisterResponse {
+  user: IUser;
+  message: string;
 }
 
-export interface IValidationError{
-  errors:{
-    [key: string]:{
+export interface ILoginMutation {
+  username: string;
+  password: string;
+}
+
+export interface IValidationError {
+  errors: {
+    [key: string]: {
       name: string;
       message: string;
     };
-  },
-  message:string,
-  name: string,
-  _message:string
+  };
+  message: string;
+  name: string;
+  _message: string;
 }
 
-
-export interface IGlobalError{
+export interface IGlobalError {
   error: string;
 }

@@ -18,7 +18,7 @@ const auth = async (expressReq: Request, res: Response, next: NextFunction) => {
   const user = await User.findOne({ token });
 
   if (!user) {
-    res.status(401).send('Token is incorrect');
+    res.status(301).send('Token is incorrect');
     return;
   }
 
