@@ -4,15 +4,23 @@ import Artists from './features/Artists/Artists.tsx';
 import Albums from './features/Albums/Albums.tsx';
 import { Container } from '@mui/material';
 import Tracks from './features/Tracks/Tracks.tsx';
+import AppToolBar from './components/UI/AppToolBar/AppToolBar.tsx';
+import RegisterPage from './features/Users/RegisterPage.tsx';
+import LoginPage from './features/Users/LoginPage.tsx';
 
 const App = () => (
-  <Container>
-    <Routes>
-      <Route path="/" element={<Artists />} />
-      <Route path="/Albums/:id" element={<Albums />} />
-      <Route path="/Tracks/:id" element={<Tracks />} />
-    </Routes>
-  </Container>
+  <>
+    <AppToolBar/>
+    <Container>
+      <Routes>
+        <Route path="/" element={<Artists />}/>
+        <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/Albums/:id" element={<Albums />} />
+        <Route path="/Tracks/:id" element={<Tracks />} />
+      </Routes>
+    </Container>
+  </>
 );
 
 export default App;

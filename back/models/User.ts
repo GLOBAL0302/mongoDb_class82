@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { HydratedDocument, Model } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { IUserField } from '../types';
 import { randomUUID } from 'node:crypto';
@@ -12,11 +12,22 @@ type UserModel = Model<IUserField, {}, IUserMethods>;
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTORY = 10;
 
-const UserSchema = new Schema<IUserField, UserModel, IUserMethods>({
+const UserSchema = new Schema<
+  HydratedDocument<IUserField>,
+  UserModel,
+  IUserMethods>({
   username: {
     type: String,
     required: [true, 'Username is required'],
     unique: true,
+    validate:{
+      validator:async function(this:HydratedDocument<IUserField>, value:string): Promise<boolean> {
+        if(!this.isModified("username"))return true
+        const user:IUserField | null = await User.findOne({username:value});
+        return !user
+      },
+      message:"This username is already taken"
+    }
   },
   password: {
     type: String,
