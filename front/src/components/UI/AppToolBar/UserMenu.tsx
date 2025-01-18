@@ -37,11 +37,8 @@ const UserMenu:React.FC<Props> = ({user}) => {
         keepMounted
         open={Boolean(anchorEl)}
       >
-        <MenuItem >
-          Profile
-        </MenuItem>
-        <MenuItem >
-          My Account
+        <MenuItem onClick={handleLogOut}>
+          My Play History
         </MenuItem>
         <MenuItem onClick={handleLogOut}>
           Log Out

@@ -1,5 +1,4 @@
 import express from 'express';
-import User from '../models/User';
 import { Error } from 'mongoose';
 import TrackHistory from '../models/TrackHistory';
 import auth, { RequestWithUser } from '../middleware/auth';
@@ -10,18 +9,19 @@ track_historyRouter.post('/', auth, async (req, res, next) => {
   try {
     let expressReq = req as RequestWithUser;
     const user = expressReq.user;
-    const track = req.body.track;
+    const track = req.body;
     const track_history = new TrackHistory({
-      user: user.id,
+      user: user._id,
       track,
       datetime: new Date().toISOString(),
     });
+
 
     await track_history.save();
     res.status(200).send(track_history);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(400).send({ error: error.message });
+      res.status(400).send({ error });
     }
     next(error);
   }

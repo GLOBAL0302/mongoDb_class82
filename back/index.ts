@@ -20,7 +20,7 @@ app.use(express.static('public'));
 app.use('/artists', artistsRouter);
 app.use('/albums', albumsRouter);
 app.use('/tracks', tracksRouter);
-app.use('/trackHistory', track_historyRouter);
+app.use('/track_history', track_historyRouter);
 app.use('/users', usersRouter);
 
 
