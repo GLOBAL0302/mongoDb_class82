@@ -4,10 +4,14 @@ import { fetchTrackHistoryThunk } from './trackHistoryThunk.ts';
 import { selectTracks } from './trackHistorySlice.ts';
 import HistoryTrack from './HistoryTrack.tsx';
 import { Grid2 } from '@mui/material';
+import { selectUser } from '../Users/usersSlice.ts';
+import { useNavigate } from 'react-router-dom';
 
 const TrackHistory = () => {
   const dispatch = useAppDispatch();
   const tracksHistory = useAppSelector(selectTracks);
+  const user = useAppSelector(selectUser);
+  const navigate = useNavigate();
 
   const fetchTracksHistory = useCallback(async () => {
     try {
@@ -18,7 +22,11 @@ const TrackHistory = () => {
   }, []);
 
   useEffect(() => {
-    void fetchTracksHistory();
+    if(user){
+      void fetchTracksHistory();
+    }else{
+      navigate('/login');
+    }
   }, [fetchTracksHistory]);
 
   return (

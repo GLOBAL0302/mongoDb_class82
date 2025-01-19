@@ -16,7 +16,6 @@ track_historyRouter.post('/', auth, async (req, res, next) => {
       datetime: new Date().toISOString(),
     });
 
-    console.log(track_history);
     await track_history.save();
     res.status(200).send(track_history);
   } catch (error) {
