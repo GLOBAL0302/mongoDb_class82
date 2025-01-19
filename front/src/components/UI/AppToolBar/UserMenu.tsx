@@ -32,10 +32,10 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   return (
     <>
       <Button onClick={handleClick} color="inherit">
-        <Typography mr={2} variant="body2" component='p' color="inherit">
+        <Typography mr={2} variant="body2" component="p" color="inherit">
           Welcome
         </Typography>
-        <strong style={{textDecoration:"underline"}}>{user.username}</strong>
+        <strong style={{ textDecoration: 'underline' }}>{user.username}</strong>
       </Button>
       <Menu anchorEl={anchorEl} onClose={handleClose} keepMounted open={Boolean(anchorEl)}>
         <MenuItem onClick={() => navigate('/trackHistory')}>My Play History</MenuItem>

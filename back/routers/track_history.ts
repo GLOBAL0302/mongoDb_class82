@@ -15,6 +15,8 @@ track_historyRouter.post('/', auth, async (req, res, next) => {
       track,
       datetime: new Date().toISOString(),
     });
+
+    console.log(track_history);
     await track_history.save();
     res.status(200).send(track_history);
   } catch (error) {
@@ -46,8 +48,7 @@ track_historyRouter.get('/', auth, async (req, res, next) => {
     });
     if (!tracksHistory) res.status(200).send({ message: 'No track with this user' });
 
-
-    const sortedTracks = tracksHistory.sort((a, b)=>-a.dateTime.localeCompare(b.dateTime))
+    const sortedTracks = tracksHistory.sort((a, b) => -a.dateTime.localeCompare(b.dateTime));
     res.status(200).send(sortedTracks);
   } catch (error) {
     if (error instanceof Error) {

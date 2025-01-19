@@ -17,7 +17,6 @@ const TrackHistory = () => {
     }
   }, []);
 
-  console.log(tracksHistory);
   useEffect(() => {
     void fetchTracksHistory();
   }, [fetchTracksHistory]);
