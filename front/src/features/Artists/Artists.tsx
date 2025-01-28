@@ -22,7 +22,6 @@ const Artists = () => {
 
   return (
     <>
-      {user && (
         <>
           <Typography textAlign="center" variant="h2" component="h2">
             Albums
@@ -41,7 +40,6 @@ const Artists = () => {
             )}
           </Grid2>
         </>
-      )}
     </>
   );
 };

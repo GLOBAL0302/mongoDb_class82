@@ -1,6 +1,9 @@
 import express from 'express';
 import { imagesUpload } from '../multer';
 import Album from '../models/Album';
+import auth from '../middleware/auth';
+import { Error } from 'mongoose';
+import permit from '../middleware/permit';
 
 const albumsRouter = express.Router();
 
@@ -35,7 +38,7 @@ albumsRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+albumsRouter.post('/', imagesUpload.single('image'), auth, async (req, res, next) => {
   const newAlbum = {
     title: req.body.title,
     artist: req.body.artist,
@@ -52,4 +55,40 @@ albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   }
 });
 
+albumsRouter.patch('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const album = await Album.findOne({ _id: id });
+    if (!album) {
+      res.status(404).send({ error: 'Album not found' });
+      return;
+    }
+
+    const updatedAlbum = await Album.findOneAndUpdate({ _id: id }, { $set: { ...album, isPublished: !album } });
+    if (!updatedAlbum) {
+      res.status(404).send({ error: 'Album not updated' });
+      return;
+    }
+    updatedAlbum.save();
+    res.status(200).send(updatedAlbum);
+  } catch (error) {
+    if (error instanceof Error.ValidationError) {
+      res.status(400).send(error.message);
+    }
+    next();
+  }
+});
+
+albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await Album.deleteOne({ _id: id });
+    res.status(200).send({ message: 'Album successfully deleted' });
+  } catch (error) {
+    if (error instanceof Error.ValidationError) {
+      res.status(400).send(error.message);
+    }
+    next();
+  }
+});
 export default albumsRouter;

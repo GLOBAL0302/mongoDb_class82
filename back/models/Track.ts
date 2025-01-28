@@ -20,6 +20,10 @@ const TrackSchema = new Schema({
     type: String,
     default: '',
   },
+  isPublished: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Track = mongoose.model('Track', TrackSchema);

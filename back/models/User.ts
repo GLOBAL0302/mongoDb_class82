@@ -30,6 +30,12 @@ const UserSchema = new Schema<HydratedDocument<IUserField>, UserModel, IUserMeth
     type: String,
     required: [true, 'Password is required'],
   },
+  role: {
+    type: String,
+    required: [true, 'Role is required'],
+    default: 'user',
+    enum: ['user', 'admin'],
+  },
   token: {
     type: String,
     required: [true, 'Token is required'],
