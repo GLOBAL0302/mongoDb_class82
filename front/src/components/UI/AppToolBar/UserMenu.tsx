@@ -23,8 +23,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     setAnchorEl(null);
   };
 
-  const handleLogOut = () => {
-    dispatch(logOutThunk());
+  const handleLogOut = async () => {
+    await dispatch(logOutThunk());
     dispatch(unsetUser());
     navigate('/');
   };

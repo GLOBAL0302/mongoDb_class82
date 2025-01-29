@@ -6,3 +6,7 @@ export const fetchArtistsThunk = createAsyncThunk<IArtists[], void>('Artists/fet
   const { data } = await axiosApi.get('/artists');
   return data;
 });
+
+export const addArtistThunk = createAsyncThunk<void, IArtists>('Artists/addArtistThunk', async (newArtist) => {
+  await axiosApi.post('/artists', newArtist);
+});

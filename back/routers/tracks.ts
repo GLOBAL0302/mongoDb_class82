@@ -94,6 +94,7 @@ tracksRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
     if (error instanceof Error.ValidationError) {
       res.status(400).send(error.message);
     }
+    next()
   }
 });
 

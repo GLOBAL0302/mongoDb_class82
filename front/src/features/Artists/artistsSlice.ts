@@ -1,15 +1,17 @@
 import { IArtists } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchArtistsThunk } from './artistsThunk.ts';
+import { addArtistThunk, fetchArtistsThunk } from './artistsThunk.ts';
 
 interface artistsState {
   allArtists: IArtists[];
   fetchingArtists: boolean;
+  addArtistLoading: boolean;
 }
 
 const initialState: artistsState = {
   allArtists: [],
   fetchingArtists: false,
+  addArtistLoading: false,
 };
 
 const artistsSlice = createSlice({
@@ -27,6 +29,17 @@ const artistsSlice = createSlice({
       })
       .addCase(fetchArtistsThunk.rejected, (state) => {
         state.fetchingArtists = false;
+      });
+
+    builder
+      .addCase(addArtistThunk.pending, (state) => {
+        state.addArtistLoading = true;
+      })
+      .addCase(addArtistThunk.fulfilled, (state) => {
+        state.addArtistLoading = false;
+      })
+      .addCase(addArtistThunk.rejected, (state) => {
+        state.addArtistLoading = false;
       });
   },
   selectors: {

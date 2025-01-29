@@ -22,9 +22,9 @@ const TrackHistory = () => {
   }, []);
 
   useEffect(() => {
-    if(user){
+    if (user) {
       void fetchTracksHistory();
-    }else{
+    } else {
       navigate('/login');
     }
   }, [fetchTracksHistory]);
