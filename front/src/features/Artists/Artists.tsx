@@ -33,7 +33,7 @@ const Artists = () => {
           {user && (
             <Grid2>
               <Button component={NavLink} to="/addArtist" variant="outlined">
-                Add Album
+                Add Artist
               </Button>
             </Grid2>
           )}

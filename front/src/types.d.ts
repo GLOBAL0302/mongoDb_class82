@@ -4,18 +4,28 @@ export interface IUser {
   token: string;
 }
 
-export interface IArtists {
-  _id: string;
+export interface IArtistsMutation {
   title: string;
   image: string | null;
+  description: string;
+
 }
 
-export interface IAlbums {
+
+export interface IArtists extends IArtistsMutation {
   _id: string;
+}
+
+
+export interface IAlbumsMutation{
   title: string;
-  artist: IArtists;
-  create_at: number;
   image: string | null;
+  create_at:string
+}
+
+export interface IAlbums  extends IAlbumsMutation {
+  _id: string;
+  artist: IArtists;
 }
 
 export interface ITracks {

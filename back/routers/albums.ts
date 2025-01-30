@@ -9,7 +9,6 @@ const albumsRouter = express.Router();
 
 albumsRouter.get('/', async (req, res, next) => {
   const artistId = req.query.artist;
-
   try {
     let albums;
     if (artistId) {

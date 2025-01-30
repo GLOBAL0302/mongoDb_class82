@@ -15,7 +15,11 @@ const Tracks = () => {
   const dispatch = useAppDispatch();
 
   const fetchAllTracks = useCallback(async () => {
-    if (id) await dispatch(fetchTracks(id));
+
+    console.log(id);
+    if (id){
+      await dispatch(fetchTracks(id));
+    }
   }, []);
 
   useEffect(() => {

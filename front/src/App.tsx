@@ -12,6 +12,7 @@ import AddArtist from './features/Artists/AddArtist.tsx';
 import { useAppSelector } from './app/hooks.ts';
 import { selectUser } from './features/Users/usersSlice.ts';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.tsx';
+import AddAlbum from './features/Albums/AddAlbums.tsx';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -25,11 +26,18 @@ const App = () => {
           <Route
             path="/addArtist"
             element={
-              <ProtectedRoute isAllowed={user === null}>
+              <ProtectedRoute isAllowed={user !== null}>
                 <AddArtist />
               </ProtectedRoute>
             }
           />
+
+          <Route path="/addAlbum" element={
+            <ProtectedRoute isAllowed={user !== null}>
+              <AddAlbum/>
+            </ProtectedRoute>
+          }/>
+
 
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Button, Grid2, TextField } from '@mui/material';
 import FileInput from '../../components/FileInput/FileInput.tsx';
+import { useAppDispatch } from '../../app/hooks.ts';
+import { addArtistThunk, fetchArtistsThunk } from './artistsThunk.ts';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   title: '',
@@ -10,6 +13,8 @@ const initialState = {
 
 const AddArtist = () => {
   const [artistForm, setArtistForm] = useState(initialState);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onChangeArtistForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,6 +26,9 @@ const AddArtist = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(addArtistThunk(artistForm));
+    dispatch(fetchArtistsThunk());
+    navigate("/");
   };
 
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
