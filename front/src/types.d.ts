@@ -3,7 +3,7 @@ export interface IUser {
   password: string;
   token: string;
   displayName: string;
-  image:string
+  avatar: string;
 }
 
 export interface IArtistsMutation {
@@ -12,25 +12,23 @@ export interface IArtistsMutation {
   description: string;
 }
 
-
 export interface IArtists extends IArtistsMutation {
   _id: string;
 }
 
-
-export interface IAlbumsMutation{
+export interface IAlbumsMutation {
   title: string;
   image: string | null;
-  create_at:string
-  artist:string
+  create_at: string;
+  artist: string;
 }
 
-export interface IAlbums{
+export interface IAlbums {
   _id: string;
   artist: IArtists;
   title: string;
   image: string | null;
-  create_at:string
+  create_at: string;
 }
 
 export interface ITracks {
@@ -51,6 +49,13 @@ export interface ITrackHistory {
 export interface IRegisterResponse {
   user: IUser;
   message: string;
+}
+
+export interface IRegisterMutation {
+  username: string;
+  password: string;
+  avatar: string | null;
+  displayName: string;
 }
 
 export interface ILoginMutation {

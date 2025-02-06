@@ -1,31 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi.ts';
-import { IGlobalError, ILoginMutation, IRegisterResponse, IUser, IValidationError } from '../../types';
+import {
+  IGlobalError,
+  ILoginMutation,
+  IRegisterMutation,
+  IRegisterResponse,
+  IUser,
+  IValidationError,
+} from '../../types';
 import { isAxiosError } from 'axios';
 
-
-export const googleLogin =  createAsyncThunk<IUser, string, {rejectValue:IGlobalError}>(
-  "user/googleLogin",
-  async(credential, {rejectWithValue})=>{
-    try{
-      const response = await axiosApi.post("/users/google", {credential});
-      return response.data.user;
-
-    }catch (error){
-      if (isAxiosError(error) && error.response && error.response.status === 400) {
-        return rejectWithValue(error.response.data);
-      }
-      throw error
-    }
-  }
-)
-
-export const signUpUserThunk = createAsyncThunk<IRegisterResponse, ILoginMutation, { rejectValue: IValidationError }>(
-  'users/signUpUsersThunk',
-  async (registerMutation: ILoginMutation, { rejectWithValue }) => {
+export const googleLogin = createAsyncThunk<IUser, string, { rejectValue: IGlobalError }>(
+  'user/googleLogin',
+  async (credential, { rejectWithValue }) => {
     try {
-      const response = await axiosApi.post<IRegisterResponse>('/users/register', registerMutation);
-      return response.data;
+      const response = await axiosApi.post('/users/google', { credential });
+      return response.data.user;
     } catch (error) {
       if (isAxiosError(error) && error.response && error.response.status === 400) {
         return rejectWithValue(error.response.data);
@@ -34,6 +24,29 @@ export const signUpUserThunk = createAsyncThunk<IRegisterResponse, ILoginMutatio
     }
   },
 );
+
+export const signUpUserThunk = createAsyncThunk<
+  IRegisterResponse,
+  IRegisterMutation,
+  { rejectValue: IValidationError }
+>('users/signUpUsersThunk', async (registerMutation: IRegisterMutation, { rejectWithValue }) => {
+  try {
+    const formData = new FormData();
+    const keys = Object.keys(registerMutation) as (keyof typeof registerMutation)[];
+    keys.forEach((key) => {
+      if (registerMutation[key]) {
+        formData.append(key, registerMutation[key]);
+      }
+    });
+    const response = await axiosApi.post<IRegisterResponse>('/users/register', formData);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response && error.response.status === 400) {
+      return rejectWithValue(error.response.data);
+    }
+    throw error;
+  }
+});
 
 export const signInThunk = createAsyncThunk<IUser, ILoginMutation, { rejectValue: IGlobalError }>(
   'users/signInThunk',
@@ -50,9 +63,6 @@ export const signInThunk = createAsyncThunk<IUser, ILoginMutation, { rejectValue
   },
 );
 
-export const logOutThunk = createAsyncThunk(
-  'users/logOutThunk',
-  async () => {
-    await axiosApi.delete('/users/sessions');
-  },
-);
+export const logOutThunk = createAsyncThunk('users/logOutThunk', async () => {
+  await axiosApi.delete('/users/sessions');
+});

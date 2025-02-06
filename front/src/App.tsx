@@ -32,12 +32,14 @@ const App = () => {
             }
           />
 
-          <Route path="/addAlbum" element={
-            <ProtectedRoute isAllowed={user !== null}>
-              <AddAlbum/>
-            </ProtectedRoute>
-          }/>
-
+          <Route
+            path="/addAlbum"
+            element={
+              <ProtectedRoute isAllowed={user !== null}>
+                <AddAlbum />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />

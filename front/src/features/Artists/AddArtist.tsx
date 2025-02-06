@@ -28,7 +28,7 @@ const AddArtist = () => {
     e.preventDefault();
     dispatch(addArtistThunk(artistForm));
     dispatch(fetchArtistsThunk());
-    navigate("/");
+    navigate('/');
   };
 
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {

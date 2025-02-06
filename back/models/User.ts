@@ -40,9 +40,9 @@ const UserSchema = new Schema<HydratedDocument<IUserField>, UserModel, IUserMeth
     type: String,
     required: [true, 'Token is required'],
   },
-  displayName:String,
-  googleID:String,
-  image:String,
+  displayName: String,
+  googleID: String,
+  avatar: String,
 });
 
 UserSchema.pre('save', async function (next) {

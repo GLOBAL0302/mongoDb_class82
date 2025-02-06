@@ -3,15 +3,15 @@ import { Error } from 'mongoose';
 import User from '../models/User';
 import auth, { RequestWithUser } from '../middleware/auth';
 import { OAuth2Client } from 'google-auth-library';
-import config  from "../config";
+import config from '../config';
+import { imagesUpload } from '../multer';
 
 const client = new OAuth2Client(config.google.clientId);
 
 const usersRouter = express.Router();
 
-
 usersRouter.post('/google', async (req, res, next) => {
-  try{
+  try {
     const ticket = await client.verifyIdToken({
       idToken: req.body.credential,
       audience: config.google.clientId,
@@ -19,46 +19,45 @@ usersRouter.post('/google', async (req, res, next) => {
 
     const payload = ticket.getPayload();
 
-    if(!payload){
-      res.status(400).send({error: 'Invalid credential'});
-      return
+    if (!payload) {
+      res.status(400).send({ error: 'Invalid credential' });
+      return;
     }
 
     const email = payload.email;
     const id = payload.sub;
     const displayName = payload.name;
-    if(!email){
-      res.status(400).send({error: "No enough user data to continue"})
-      return
+    if (!email) {
+      res.status(400).send({ error: 'No enough user data to continue' });
+      return;
     }
-    let user = await User.findOne({googleID: id});
+    let user = await User.findOne({ googleID: id });
 
-    if(!user){
+    if (!user) {
       user = new User({
-        username:email,
-        password:crypto.randomUUID(),
-        googleId:id,
+        username: email,
+        password: crypto.randomUUID(),
+        googleId: id,
         displayName: payload.name,
-        image:payload.picture
+        image: payload.picture,
       });
     }
 
     user.generateToken();
     await user.save();
-    res.send({message:"login with google success", user});
-
-  }catch(e){
-    next(e)
+    res.send({ message: 'login with google success', user });
+  } catch (e) {
+    next(e);
   }
 });
 
-
-
-usersRouter.post('/register', async (req, res, next) => {
+usersRouter.post('/register', imagesUpload.single('avatar'), async (req, res, next) => {
   try {
     const user = new User({
       username: req.body.username,
       password: req.body.password,
+      displayName: req.body.displayName,
+      avatar: req.file ? 'images' + req.file.filename : null,
     });
 
     user.generateToken();

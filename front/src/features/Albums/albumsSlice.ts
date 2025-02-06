@@ -6,14 +6,14 @@ interface AlbumsState {
   Albums: IAlbums[];
   AlbumAuthor: string | null;
   fetchingAlbums: boolean;
-  addingAlbum:boolean;
+  addingAlbum: boolean;
 }
 
 const initialState: AlbumsState = {
   Albums: [],
   AlbumAuthor: null,
   fetchingAlbums: false,
-  addingAlbum:false
+  addingAlbum: false,
 };
 
 const albumsSlice = createSlice({
@@ -35,15 +35,15 @@ const albumsSlice = createSlice({
       });
 
     builder
-      .addCase(addAlbum.pending, state => {
-        state.addingAlbum = true
+      .addCase(addAlbum.pending, (state) => {
+        state.addingAlbum = true;
       })
-      .addCase(addAlbum.fulfilled, state => {
-        state.addingAlbum = false
+      .addCase(addAlbum.fulfilled, (state) => {
+        state.addingAlbum = false;
       })
-      .addCase(addAlbum.rejected, state => {
-        state.addingAlbum = false
-      })
+      .addCase(addAlbum.rejected, (state) => {
+        state.addingAlbum = false;
+      });
   },
   selectors: {
     selectAllAlbums: (state) => state.Albums,

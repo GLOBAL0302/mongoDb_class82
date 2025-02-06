@@ -53,7 +53,6 @@ const usersSlice = createSlice({
         state.loginLoading = false;
       });
 
-
     builder
       .addCase(googleLogin.pending, (state) => {
         state.loginLoading = true;

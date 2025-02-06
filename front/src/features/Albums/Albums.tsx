@@ -31,11 +31,13 @@ const Albums = () => {
             {author?.toUpperCase()}
           </Typography>
         </Grid2>
-       <Grid2>
-         {user && (<Button component={NavLink} to={`/addAlbum`} variant="outlined" color="primary">
-           Add album
-         </Button>)}
-       </Grid2>
+        <Grid2>
+          {user && (
+            <Button component={NavLink} to={`/addAlbum`} variant="outlined" color="primary">
+              Add album
+            </Button>
+          )}
+        </Grid2>
       </Grid2>
       {albumsLoading ? (
         <CircularProgress />

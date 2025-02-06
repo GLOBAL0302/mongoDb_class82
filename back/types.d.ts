@@ -4,6 +4,6 @@ export interface IUserField {
   role: string;
   token: string;
   displayName: string;
-  googleID:string
-  image:string
+  googleID: string;
+  avatar: string;
 }

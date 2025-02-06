@@ -7,12 +7,11 @@ export const fetchArtistsThunk = createAsyncThunk<IArtists[], void>('Artists/fet
   return data;
 });
 
-
 export const addArtistThunk = createAsyncThunk<void, IArtistsMutation>('Artists/addArtistThunk', async (newArtist) => {
   const formData = new FormData();
   const keys = Object.keys(newArtist) as (keyof typeof newArtist)[];
   keys.forEach((key) => {
-    if(newArtist[key] !==null){
+    if (newArtist[key] !== null) {
       formData.append(key, newArtist[key]);
     }
   });

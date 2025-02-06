@@ -1,22 +1,25 @@
 import { Avatar, Box, Button, Container, Grid2, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
-import { ILoginMutation } from '../../types';
+import { IRegisterMutation } from '../../types';
 import { signUpUserThunk } from './usersThunk.ts';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectRegisterError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
+import FileInput from '../../components/FileInput/FileInput.tsx';
 
 const initialState = {
   username: '',
   password: '',
+  displayName: '',
+  avatar: null,
 };
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const registerError = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
-  const [userForm, setUserForm] = useState<ILoginMutation>(initialState);
+  const [userForm, setUserForm] = useState<IRegisterMutation>(initialState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,7 +31,6 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       await dispatch(signUpUserThunk(userForm)).unwrap();
       navigate('/');
@@ -42,6 +44,16 @@ const RegisterPage = () => {
       return registerError?.errors[fieldName].message;
     } catch {
       return undefined;
+    }
+  };
+
+  const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = event.target;
+    if (files) {
+      setUserForm((prevState) => ({
+        ...prevState,
+        [name]: files[0] || null,
+      }));
     }
   };
 
@@ -79,6 +91,18 @@ const RegisterPage = () => {
               <Grid2 size={12}>
                 <TextField
                   onChange={handleChange}
+                  value={userForm.displayName}
+                  name="displayName"
+                  fullWidth
+                  id="displayName"
+                  label="Display name"
+                  error={Boolean(getFieldError('displayName'))}
+                  helperText={getFieldError('displayName')}
+                />
+              </Grid2>
+              <Grid2 size={12}>
+                <TextField
+                  onChange={handleChange}
                   fullWidth
                   value={userForm.password}
                   name="password"
@@ -88,6 +112,9 @@ const RegisterPage = () => {
                   error={Boolean(getFieldError('password'))}
                   helperText={getFieldError('password')}
                 />
+              </Grid2>
+              <Grid2>
+                <FileInput onGetFile={onChangeFile} name="avatar" label="avatar" />
               </Grid2>
             </Grid2>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

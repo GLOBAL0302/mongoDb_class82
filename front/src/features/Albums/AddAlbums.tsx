@@ -7,11 +7,10 @@ import { selectAllArtists } from '../Artists/artistsSlice.ts';
 import { addAlbum } from './albumsThunk.ts';
 
 const initialState = {
-
   title: '',
   create_at: '',
   image: null,
-  artist:""
+  artist: '',
 };
 
 const AddAlbum = () => {
@@ -20,7 +19,6 @@ const AddAlbum = () => {
 
   const [albumForm, setAlbumForm] = useState(initialState);
   const dispatch = useAppDispatch();
-
 
   const onChangeAlbumForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -33,7 +31,7 @@ const AddAlbum = () => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(addAlbum(albumForm));
-  }
+  };
 
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
@@ -71,14 +69,12 @@ const AddAlbum = () => {
         />
       </Grid2>
       <Grid2>
-        <select
-          value={albumForm.artist}
-          name="artist"
-          id="artist"
-          onChange={onChangeAlbumForm}>
-          <option  disabled>Select Artist</option>
-          {albums.map((item)=>(
-            <option key={item._id} value={item._id}>{item.title}</option>
+        <select value={albumForm.artist} name="artist" id="artist" onChange={onChangeAlbumForm}>
+          <option disabled>Select Artist</option>
+          {albums.map((item) => (
+            <option key={item._id} value={item._id}>
+              {item.title}
+            </option>
           ))}
         </select>
       </Grid2>
