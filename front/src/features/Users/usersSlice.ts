@@ -1,6 +1,6 @@
 import { IGlobalError, IUser, IValidationError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { signInThunk, signUpUserThunk } from './usersThunk.ts';
+import { googleLogin, signInThunk, signUpUserThunk } from './usersThunk.ts';
 
 interface UsersState {
   user: IUser | null;
@@ -49,6 +49,20 @@ const usersSlice = createSlice({
         state.user = user;
       })
       .addCase(signInThunk.rejected, (state, { payload: error }) => {
+        state.loginError = error || null;
+        state.loginLoading = false;
+      });
+
+
+    builder
+      .addCase(googleLogin.pending, (state) => {
+        state.loginLoading = true;
+      })
+      .addCase(googleLogin.fulfilled, (state, { payload: user }) => {
+        state.loginLoading = false;
+        state.user = user;
+      })
+      .addCase(googleLogin.rejected, (state, { payload: error }) => {
         state.loginError = error || null;
         state.loginLoading = false;
       });

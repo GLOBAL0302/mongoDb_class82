@@ -29,13 +29,17 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     navigate('/');
   };
 
+  console.log(user);
+
+
   return (
     <>
       <Button onClick={handleClick} color="inherit">
         <Typography mr={2} variant="body2" component="p" color="inherit">
           Welcome
         </Typography>
-        <strong style={{ textDecoration: 'underline' }}>{user.username}</strong>
+        <strong style={{ textDecoration: 'underline' }}>{user.displayName}</strong>
+        {user.image && <img src={user.image} alt={user.username} />}
       </Button>
       <Menu anchorEl={anchorEl} onClose={handleClose} keepMounted open={Boolean(anchorEl)}>
         <MenuItem onClick={() => navigate('/trackHistory')}>My Play History</MenuItem>

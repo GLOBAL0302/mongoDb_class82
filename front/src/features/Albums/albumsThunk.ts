@@ -7,10 +7,9 @@ export const fetchAlbumsThunk = createAsyncThunk<IAlbums[], string>('albums/fetc
   return data;
 });
 
-export const addAlbum = createAsyncThunk<void, {newAlbum:IAlbumsMutation, artistId:string}>(
+export const addAlbum = createAsyncThunk<void, IAlbumsMutation>(
   'albums/addAlbum',
-  async({newAlbum, artistId})=>{
-    console.log({newAlbum, artistId});
+  async(newAlbum)=>{
 
     const formData = new FormData();
     const keys = Object.keys(newAlbum) as (keyof IAlbumsMutation)[]
@@ -19,8 +18,6 @@ export const addAlbum = createAsyncThunk<void, {newAlbum:IAlbumsMutation, artist
         formData.append(key, newAlbum[key]);
       }
     });
-
-    formData.append("artist", artistId);
     await axiosApi.post("/albums", formData);
   }
 )

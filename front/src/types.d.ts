@@ -2,13 +2,14 @@ export interface IUser {
   username: string;
   password: string;
   token: string;
+  displayName: string;
+  image:string
 }
 
 export interface IArtistsMutation {
   title: string;
   image: string | null;
   description: string;
-
 }
 
 
@@ -21,11 +22,15 @@ export interface IAlbumsMutation{
   title: string;
   image: string | null;
   create_at:string
+  artist:string
 }
 
-export interface IAlbums  extends IAlbumsMutation {
+export interface IAlbums{
   _id: string;
   artist: IArtists;
+  title: string;
+  image: string | null;
+  create_at:string
 }
 
 export interface ITracks {

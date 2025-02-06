@@ -4,16 +4,14 @@ import FileInput from '../../components/FileInput/FileInput.tsx';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 
 import { selectAllArtists } from '../Artists/artistsSlice.ts';
+import { addAlbum } from './albumsThunk.ts';
 
 const initialState = {
 
   title: '',
   create_at: '',
   image: null,
-  artist:{
-    id:"",
-    title:""
-  }
+  artist:""
 };
 
 const AddAlbum = () => {
@@ -34,7 +32,8 @@ const AddAlbum = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    }
+    dispatch(addAlbum(albumForm));
+  }
 
   const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = event.target;
@@ -73,7 +72,7 @@ const AddAlbum = () => {
       </Grid2>
       <Grid2>
         <select
-          value={albumForm.artist.title}
+          value={albumForm.artist}
           name="artist"
           id="artist"
           onChange={onChangeAlbumForm}>
